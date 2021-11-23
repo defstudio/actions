@@ -2,9 +2,9 @@
 
 namespace DefStudio\Actions\Tests;
 
+use DefStudio\Actions\ActionsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use DefStudio\Actions\ActionsServiceProvider;
 
 class TestCase extends Orchestra
 {
