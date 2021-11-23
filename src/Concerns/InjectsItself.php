@@ -6,12 +6,12 @@ use DefStudio\Actions\Exceptions\ActionException;
 
 trait InjectsItself
 {
-    public static function make(): static
+    public static function make(array $parameters = []): static
     {
-        return app(static::class);
+        return app(static::class, $parameters);
     }
 
-    public static function run(mixed $arguments): mixed
+    public static function run(mixed ...$arguments): mixed
     {
         $instance = static::make();
 
