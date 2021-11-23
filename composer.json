@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "defstudio/actions",
+    "description": "Helpers methods for Laravel Actions",
     "keywords": [
-        ":vendor_name",
+        "defstudio",
         "laravel",
-        ":package_slug"
+        "actions"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/defstudio/actions",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Fabio Ivona",
+            "email": "fabio.ivona@defstudio.it",
             "role": "Developer"
         }
     ],
@@ -34,13 +34,12 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "DefStudio\\Actions\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "DefStudio\\Actions\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -54,11 +53,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "DefStudio\\Actions\\ActionsServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",
