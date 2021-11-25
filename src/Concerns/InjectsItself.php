@@ -19,6 +19,7 @@ trait InjectsItself
             throw ActionException::undefinedHandleMethod(static::class);
         }
 
+        /** @phpstan-ignore-next-line  */
         return $instance->handle(...$arguments);
     }
 }
