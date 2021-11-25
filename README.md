@@ -17,7 +17,7 @@ composer require defstudio/actions
 
 ## Usage
 
-Add `use ActAsAction;` trait to your action class
+Add `use DefStudio\Actions\ActAsAction;` trait to your action class or extend `DefStudio\Actions\Action` 
 
 (optional) add a dockblock to hint the static `run` method parameters and return types
 
@@ -29,6 +29,21 @@ class DeleteReport
 {
     use ActsAsAction;
 
+    public function handle(Report|int $report): void
+    {
+        if (is_int($report)) {
+            $report = Report::findOrFail($report);
+        }
+
+        DB::transaction(function () use ($report) {
+            $report->delete_data();
+            $report->delete();
+        });
+    }
+}
+
+class DeleteReport extends \DefStudio\Actions\Action
+{
     public function handle(Report|int $report): void
     {
         if (is_int($report)) {
