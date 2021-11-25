@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUnhandledExceptionInspection */
 
 namespace DefStudio\Actions\Concerns;
