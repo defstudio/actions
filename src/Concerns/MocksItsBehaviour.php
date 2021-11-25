@@ -1,6 +1,9 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 
 namespace DefStudio\Actions\Concerns;
+
+use App\Exceptions\ActionException;
 
 trait MocksItsBehaviour
 {
