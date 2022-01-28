@@ -2,11 +2,9 @@
 
 namespace DefStudio\Actions\Concerns;
 
-use DefStudio\Actions\Action;
 use DefStudio\Actions\Jobs\ActionJob;
 use Illuminate\Bus\Dispatcher;
 use Illuminate\Foundation\Bus\PendingDispatch;
-use phpDocumentor\Reflection\Types\Static_;
 
 trait ActsAsJob
 {

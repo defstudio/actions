@@ -5,7 +5,7 @@ use DefStudio\Actions\Concerns\MocksItsBehaviour;
 use PHPUnit\Framework\ExpectationFailedException;
 
 it('can mocks its behaviour', function () {
-    $class = new class {
+    $class = new class () {
         use MocksItsBehaviour;
 
         public function handle(): string

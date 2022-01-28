@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpIllegalPsrClassPathInspection */
+<?php
+
+/** @noinspection PhpIllegalPsrClassPathInspection */
 
 
 use DefStudio\Actions\Concerns\InjectsItself;
@@ -31,8 +33,6 @@ it('can resolve itself from service container', function () {
 });
 
 it('can switch itself using service container', function () {
-
-
     app()->bind(TestClass::class, fn () => new TestDouble());
 
     expect(TestClass::make())

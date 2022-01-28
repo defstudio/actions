@@ -16,5 +16,4 @@ class ActionJob
     {
         $this->action = app($actionClass);
     }
-
 }
