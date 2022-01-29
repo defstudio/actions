@@ -163,4 +163,4 @@ test('action handle method is called', function () {
     $class::mock(fn () => null);
 
     $class::dispatch();
-});
+})->only();
