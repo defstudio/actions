@@ -78,7 +78,7 @@ test('timeout can be chosen', function () {
     $job = new ActionJob($class::class);
 
     expect($job->timeout)->toBe(150);
-})->only();
+});
 
 test('timeout can be chosen with a closure', function () {
     $class = new class() {
