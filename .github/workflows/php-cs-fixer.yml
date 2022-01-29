@@ -1,6 +1,6 @@
 name: Check & fix styling
 
-on: [push]
+on: [ push ]
 
 jobs:
   php-cs-fixer:
@@ -12,10 +12,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Run PHP CS Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
-        with:
-          args: --config=.php_cs.dist.php --allow-risky=yes
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v1
+
+      - name: Run CS Fixer
+        run: ./vendor/bin/php-cs-fixer fix -v
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
