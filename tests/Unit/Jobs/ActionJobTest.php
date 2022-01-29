@@ -66,7 +66,7 @@ test('tries can be chosen with a closure', function () {
     $job = new ActionJob($class::class);
 
     expect($job->tries)->toBe(42);
-})->only();
+});
 
 test('timeout can be chosen', function () {
     $class = new class() {
