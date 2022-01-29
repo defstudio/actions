@@ -78,7 +78,7 @@ test('timeout can be chosen', function () {
     $job = new ActionJob($class::class);
 
     expect($job->timeout)->toBe(150);
-});
+})->only();
 
 test('timeout can be chosen with a closure', function () {
     $class = new class() {
@@ -93,7 +93,7 @@ test('timeout can be chosen with a closure', function () {
     $job = new ActionJob($class::class);
 
     expect($job->timeout)->toBe(150);
-});
+})->only();
 
 test('backoff can be chosen', function () {
     $class = new class() {
@@ -105,7 +105,7 @@ test('backoff can be chosen', function () {
     $job = new ActionJob($class::class);
 
     expect($job->backoff)->toMatchArray([10, 100, 1000]);
-});
+})->only();
 
 test('backoff can be chosen with a closure', function () {
     $class = new class() {
@@ -120,7 +120,7 @@ test('backoff can be chosen with a closure', function () {
     $job = new ActionJob($class::class);
 
     expect($job->backoff)->toMatchArray([10, 100, 1000]);
-});
+})->only();
 
 test('job can be configured from action', function () {
     $class = new class() {
