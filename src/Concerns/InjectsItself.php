@@ -15,11 +15,11 @@ trait InjectsItself
     {
         $instance = static::make();
 
-        if (! method_exists(static::class, 'handle')) {
+        if (!method_exists(static::class, 'handle')) {
             throw ActionException::undefinedHandleMethod(static::class);
         }
 
-        /** @phpstan-ignore-next-line  */
+        /* @phpstan-ignore-next-line  */
         return $instance->handle(...$arguments);
     }
 }

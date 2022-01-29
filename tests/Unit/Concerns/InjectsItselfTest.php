@@ -2,7 +2,6 @@
 
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
-
 use DefStudio\Actions\Concerns\InjectsItself;
 
 class TestClass
@@ -15,17 +14,13 @@ class TestClass
     }
 }
 
-;
-
 class TestDouble extends TestClass
 {
     public function handle(): string
     {
-        return "test double";
+        return 'test double';
     }
 }
-
-;
 
 it('can resolve itself from service container', function () {
     expect(TestClass::make())
@@ -40,9 +35,9 @@ it('can switch itself using service container', function () {
 });
 
 it('can run injecting itself from service container', function () {
-    expect(TestClass::run())->toBe("test class");
+    expect(TestClass::run())->toBe('test class');
 
     app()->bind(TestClass::class, fn () => new TestDouble());
 
-    expect(TestClass::run())->toBe("test double");
+    expect(TestClass::run())->toBe('test double');
 });

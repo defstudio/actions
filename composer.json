@@ -21,6 +21,7 @@
         "illuminate/contracts": "^8.37 || ^9.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.2.1",
         "nunomaduro/collision": "^5.10",
         "nunomaduro/larastan": "^1.0",
         "orchestra/testbench": "^6.22",
@@ -44,9 +45,16 @@
         }
     },
     "scripts": {
-        "phpstan": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest coverage"
+        "lint": "php-cs-fixer fix -v",
+        "test:lint": "php-cs-fixer fix -v --dry-run",
+        "test:types": "phpstan analyse --ansi",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ],
+        "coverage": "@test:unit --coverage"
     },
     "config": {
         "sort-packages": true
