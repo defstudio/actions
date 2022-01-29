@@ -147,7 +147,7 @@ test('job can be configured from action', function () {
     dispatch($job);
 
     Queue::assertPushedOn('test', ActionJob::class);
-});
+})->only();
 
 test('action handle method is called', function () {
     $class = new class() {
