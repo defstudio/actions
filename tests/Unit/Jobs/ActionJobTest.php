@@ -51,7 +51,7 @@ test('tries can be chosen', function () {
     $job = new ActionJob($class::class);
 
     expect($job->tries)->toBe(42);
-})->only();
+});
 
 test('tries can be chosen with a closure', function () {
     $class = new class() {
