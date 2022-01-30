@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
 namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Exceptions\ActionException;
@@ -19,7 +21,7 @@ trait InjectsItself
             throw ActionException::undefinedHandleMethod(static::class);
         }
 
-        /* @phpstan-ignore-next-line  */
+        /* @phpstan-ignore-next-line */
         return $instance->handle(...$arguments);
     }
 }

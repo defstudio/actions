@@ -3,6 +3,7 @@
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
 use DefStudio\Actions\Concerns\InjectsItself;
+use DefStudio\Actions\Exceptions\ActionException;
 
 class TestClass
 {
@@ -41,3 +42,16 @@ it('can run injecting itself from service container', function () {
 
     expect(TestClass::run())->toBe('test double');
 });
+
+it('requires and handle method to run injecting from service container', function () {
+    $class = new class() {
+        use InjectsItself;
+
+        public function execute(): string
+        {
+            return 'executed';
+        }
+    };
+
+    $class::run();
+})->throws(ActionException::class);

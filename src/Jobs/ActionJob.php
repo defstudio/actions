@@ -6,7 +6,7 @@
 
 namespace DefStudio\Actions\Jobs;
 
-use Exception;
+use DefStudio\Actions\Exceptions\ActionException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -46,6 +46,7 @@ class ActionJob implements ShouldQueue
         $this->parameters  = array_values($parameters);
 
         $this->onQueue($this->getActionProperty('queue')); //@phpstan-ignore-line
+
         $this->tries   = $this->getActionProperty('tries'); //@phpstan-ignore-line
         $this->timeout = $this->getActionProperty('timeout'); //@phpstan-ignore-line
         $this->backoff = $this->getActionProperty('backoff'); //@phpstan-ignore-line
@@ -55,6 +56,10 @@ class ActionJob implements ShouldQueue
 
     public function handle(): void
     {
+        if (!method_exists($this->actionClass, 'handle')) {
+            throw ActionException::undefinedHandleMethod($this->actionClass);
+        }
+
         $this->callActionMethod('handle', ...$this->parameters);
     }
 
@@ -77,9 +82,13 @@ class ActionJob implements ShouldQueue
             return $this->action()->$property;
         }
 
-        $method = Str::of($property)->studly()->prepend('get');
+        $getPropertyMethod = Str::of($property)->studly()->prepend('get');
 
-        return $this->callActionMethod($method);
+        if (method_exists($this->actionClass, $getPropertyMethod)) {
+            return $this->callActionMethod($getPropertyMethod);
+        }
+
+        return $this->callActionMethod($property);
     }
 
     public function callActionMethod(string $method, mixed ...$args): mixed
@@ -91,7 +100,7 @@ class ActionJob implements ShouldQueue
         return $this->action()->$method(...$args);
     }
 
-    public function failed(Exception $exception): void
+    public function failed(\Throwable $exception): void
     {
         $this->callActionMethod('jobFailed', $exception);
     }

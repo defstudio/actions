@@ -3,7 +3,6 @@
 namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Jobs\ActionJob;
-use Exception;
 use Illuminate\Foundation\Bus\PendingDispatch;
 
 trait ActsAsJob
@@ -18,18 +17,8 @@ trait ActsAsJob
         return new PendingDispatch(static::job(...$args));
     }
 
-    public static function dispatchSync(mixed ...$args): mixed
-    {
-        return dispatch_sync(static::job(...$args));
-    }
-
     public static function dispatchAfterResponse(mixed ...$args): PendingDispatch
     {
         return self::dispatch(...$args)->afterResponse();
-    }
-
-    public function jobFailed(Exception $exception): void
-    {
-        report($exception);
     }
 }

@@ -17,7 +17,7 @@ composer require defstudio/actions
 
 ## Usage
 
-Add `use DefStudio\Actions\ActAsAction;` trait to your action class or extend `DefStudio\Actions\Action` 
+Add `use DefStudio\Actions\ActAsAction;` trait to your action class or extend `DefStudio\Actions\Action`
 
 (optional) add a dockblock to hint the static `run` method parameters and return types
 
@@ -71,6 +71,60 @@ Also, you can define a mock for the action (it will be authomatically bound to t
 ```php
 $mock = DeleteReport::mock(fn($report_id) => null);
 ```
+
+## Dispatchable actions
+
+An action can be made _dispatchable_ as a job with the `ActsAsJob` trait (or extending the `Action` class)
+
+a job can be created by calling the `job()` static method:
+
+```php
+dispatch(LongRunningAction::job($argument_1, $argument_2));
+```
+
+or can be dispatched with its dedicated methods:
+
+```php
+LongRunningAction::dispatch($argument_1, $argument_2);
+
+LongRunningAction::dispatchAfterResponse($argument_1, $argument_2);
+```
+
+The action will be dispatched wrapped in a ActionJob decorator that will proxy properties as needed:
+
+```php
+use DefStudio\Actions\Concerns\ActsAsJob;
+
+class LongRunningAction{
+    use ActsAsJob;
+    
+    public int $timeout = 2 * 60 * 60;
+    public int $tries = 4;
+    public array $backoff = [60, 120, 300, 600];
+    public string $queue = 'long-running';
+    
+    public function handle(){...}
+}
+```
+
+### Cleaning up after failed action job
+
+Failed action jobs can be handled by defining a `jobFailed()` method:
+
+```php
+use Illuminate\Support\Facades\Mail;class LongRunningAction{
+    use ActsAsJob;
+       
+    public function handle(){..}
+    
+    public function jobFailed($exception){
+        $this->handleFailure();
+    }
+    
+    private function handleFailure(){..}
+}
+```
+
 
 ## Testing
 
