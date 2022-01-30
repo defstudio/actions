@@ -2,9 +2,9 @@ name: run-tests
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   test:
@@ -12,9 +12,9 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        php: [8.0, 8.1]
-        laravel: [8.*]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        php: [ 8.0, 8.1 ]
+        laravel: [ 8.* ]
         include:
           - laravel: 8.*
             testbench: ^6.6
@@ -30,7 +30,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          tools: composer:v2
           coverage: none
 
       - name: Setup problem matchers
