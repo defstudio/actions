@@ -6,6 +6,7 @@
 
 namespace DefStudio\Actions\Jobs;
 
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -88,5 +89,10 @@ class ActionJob implements ShouldQueue
         }
 
         return $this->action()->$method(...$args);
+    }
+
+    public function failed(Exception $exception): void
+    {
+        $this->callActionMethod('jobFailed', $exception);
     }
 }

@@ -22,7 +22,7 @@ trait ActsAsJob
         return dispatch_sync(static::job(...$args));
     }
 
-    public static function dispatchAfterResponse(mixed ...$args): mixed
+    public static function dispatchAfterResponse(mixed ...$args): PendingDispatch
     {
         return self::dispatch(...$args)->afterResponse();
     }
