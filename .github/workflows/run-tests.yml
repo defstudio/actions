@@ -23,7 +23,7 @@ jobs:
             testbench: ^7.0
         exclude:
           - laravel: 8.*
-          - stability: prefer-lowest
+            stability: prefer-lowest
 
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
