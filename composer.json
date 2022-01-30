@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.2.1",
-        "nunomaduro/collision": "^5.10",
+        "nunomaduro/collision": "^5.10 || ^v6.1.0",
         "nunomaduro/larastan": "^1.0",
         "orchestra/testbench": "^6.22",
         "pestphp/pest": "^1.10",
