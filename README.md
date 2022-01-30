@@ -150,6 +150,8 @@ Please review [our security policy](../../security/policy) on how to report secu
 - [Fabio Ivona](https://github.com/fabio-ivona)
 - [All Contributors](../../contributors)
 
+This project was inspired and is built as an opinionated and simplified implementation of [Loris Leiva](https://github.com/lorisleiva)'s [Laravel Actions](https://laravelactions.com/). For a more powerful tool, you should take a look at it.
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
