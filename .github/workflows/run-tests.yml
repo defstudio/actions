@@ -15,6 +15,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
         php: [ 8.0, 8.1 ]
         laravel: [ 8.*, 9.* ]
+        stability: [prefer-stable, prefer-lowest]
         include:
           - laravel: 8.*
             testbench: ^6.6
@@ -22,7 +23,7 @@ jobs:
             testbench: ^7.0
 
 
-    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -44,7 +45,7 @@ jobs:
       - name: Install dependencies
         run: |
           composer require --dev "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --prefer-dist --no-interaction
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
         run: vendor/bin/pest
