@@ -2,6 +2,10 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v0.0.3 - 2022-01-30
+
+**Full Changelog**: https://github.com/def-studio/actions/compare/v0.0.2...v0.0.3
+
 ## v0.0.2 - 2022-01-29
 
 ## What's Changed
