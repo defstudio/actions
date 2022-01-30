@@ -104,4 +104,9 @@ class ActionJob implements ShouldQueue
     {
         $this->callActionMethod('jobFailed', $exception);
     }
+
+    public function displayName(): string
+    {
+        return $this->actionClass;
+    }
 }
