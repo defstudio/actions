@@ -77,23 +77,24 @@ $results = DeleteReport::runMany($report1->id, $report2->id, $report3->id); //[t
 
 each run's result will be collected in an array and returned by `runMany()`
 
-_notes_ 
+_notes_
 
 if multiple parameters are required, they can be wrapped in an array (associative array keys will be treated as named arguments):
 
 ```php
 class{
- use InjectsItself;
+    use InjectsItself;
  
- public function handle($name = 'guest', $title = 'Mr.'){
-    return "$title $name";
- }
+    public function handle($name = 'guest', $title = 'Mr.'): string
+    {
+        return "$title $name";
+    }
 }
 
-$result = MyAwesomeAction::runMany(['Elizabeth', "Ms."], ['Fabio'],  ['title' => 'Mrs.'])
-// ["Ms. Elizabeth", "Mr. Fabio", "Mrs. guest"] 
-```
+$result = MyAwesomeAction::runMany(['Elizabeth', "Ms."], ['Fabio'],  ['title' => 'Mrs.']);
 
+// $result = ["Ms. Elizabeth", "Mr. Fabio", "Mrs. guest"] 
+```
 
 ## Mockable actions
 
@@ -148,7 +149,8 @@ class LongRunningAction{
        
     public function handle(){..}
     
-    public function jobFailed($exception){
+    public function jobFailed($exception)
+    {
         $this->handleFailure();
     }
     
@@ -161,12 +163,10 @@ class LongRunningAction{
 Similarly to the `runMany()` method, a new batch/chain of action jobs can be created starting from an array of parameters:
 
 ```php
-
 MyAction::batch([$name1, $title1], [$name2, $title2])->dispatch();
 
 MyAction::chain([$name1, $title1], [$name2, $title2])->dispatch();
 ```
-
 
 ## Testing
 
