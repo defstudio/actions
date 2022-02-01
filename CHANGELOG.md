@@ -2,6 +2,15 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v0.0.7 - 2022-02-01
+
+## What's Changed
+
+- adds runMany() method by @fabio-ivona in https://github.com/def-studio/actions/pull/4
+- adds batch() and chain() methods by @fabio-ivona in https://github.com/def-studio/actions/pull/5
+
+**Full Changelog**: https://github.com/def-studio/actions/compare/v0.0.6...v0.0.7
+
 ## v0.0.6 - 2022-02-01
 
 **Full Changelog**: https://github.com/def-studio/actions/compare/v0.0.5...v0.0.6
