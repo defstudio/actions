@@ -7,6 +7,7 @@
 namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Exceptions\ActionException;
+use ReflectionMethod;
 
 trait InjectsItself
 {
@@ -15,7 +16,7 @@ trait InjectsItself
         return app(static::class, $parameters);
     }
 
-    public static function run(mixed ...$parameters): mixed
+    public static function run(mixed ...$args): mixed
     {
         $instance = static::make();
 
@@ -24,33 +25,28 @@ trait InjectsItself
         }
 
         /* @phpstan-ignore-next-line */
-        return $instance->handle(...$parameters);
+        return $instance->handle(...$args);
     }
 
-    /**
-     * @return array<int|string, mixed>
-     *
-     * @throws ActionException
-     */
-    public static function runMany(mixed ...$parameters): array
+    public static function runMany(mixed ...$args): array
     {
         if (!method_exists(static::class, 'handle')) {
             throw ActionException::undefinedHandleMethod(static::class);
         }
 
-        return collect($parameters)
-            ->map(function (mixed $runParams) {
-                if (!is_array($runParams)) {
-                    return static::run($runParams);
+        return collect($args)
+            ->map(function (mixed $runArgs) {
+                if (!is_array($runArgs)) {
+                    return static::run($runArgs);
                 }
 
-                $reflection = new \ReflectionMethod(static::class, 'handle');
+                $reflection = new ReflectionMethod(static::class, 'handle');
 
                 if ($reflection->getNumberOfParameters() > 1) {
-                    return static::run(...$runParams);
+                    return static::run(...$runArgs);
                 }
 
-                return static::run($runParams);
+                return static::run($runArgs);
             })->toArray();
     }
 }
