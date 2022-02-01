@@ -7,6 +7,7 @@
 namespace DefStudio\Actions\Jobs;
 
 use DefStudio\Actions\Exceptions\ActionException;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,6 +25,7 @@ class ActionJob implements ShouldQueue
     use Queueable;
     use Dispatchable;
     use SerializesModels;
+    use Batchable;
 
     /** @var class-string<TAction> */
     protected string $actionClass;
