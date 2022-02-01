@@ -109,6 +109,9 @@ class ActionJob implements ShouldQueue
 
     public function displayName(): string
     {
-        return $this->callActionMethod('jobDisplayName', ...$this->parameters) ?? $this->actionClass;
+        /** @var string|null $displayName */
+        $displayName = $this->callActionMethod('jobDisplayName', ...$this->parameters);
+
+        return $displayName ?? $this->actionClass;
     }
 }
