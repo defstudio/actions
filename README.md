@@ -45,15 +45,15 @@ class DeleteReport
 
 class DeleteReport extends \DefStudio\Actions\Action
 {
-    public function handle(Report|int $report): void
+    public function handle(Report|int $report): bool
     {
         if (is_int($report)) {
             $report = Report::findOrFail($report);
         }
 
-        DB::transaction(function () use ($report) {
+        return DB::transaction(function () use ($report) {
             $report->delete_data();
-            $report->delete();
+            return $report->delete();
         });
     }
 }
@@ -62,10 +62,40 @@ class DeleteReport extends \DefStudio\Actions\Action
 Use the new methods:
 
 ```php
-DeleteReport::run($report->id);
+$result = DeleteReport::run($report->id); //true
 
-DeleteReport::make()->handle($report->id);
+$result = DeleteReport::make()->handle($report->id); //true
 ```
+
+## Run multiple actions as once
+
+an action can be run multiple times by calling its `runMany()` method
+
+```php
+$results = DeleteReport::runMany($report1->id, $report2->id, $report3->id); //[true, false, true]
+```
+
+each run's result will be collected in an array and returned by `runMany()`
+
+_notes_ 
+
+if multiple parameters are required, they can be wrapped in an array (associative array keys will be treated as named arguments):
+
+```php
+class{
+ use InjectsItself;
+ 
+ public function handle($name = 'guest', $title = 'Mr.'){
+    return "$title $name";
+ }
+}
+
+$result = MyAwesomeAction::runMany(['Elizabeth', "Ms."], ['Fabio'],  ['title' => 'Mrs.'])
+// ["Ms. Elizabeth", "Mr. Fabio", "Mrs. guest"] 
+```
+
+
+## Mockable actions
 
 Also, you can define a mock for the action (it will be authomatically bound to the app container):
 
