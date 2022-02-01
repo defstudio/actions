@@ -106,7 +106,7 @@ it('can run itself multiple times', function ($class, $parameters, $result) {
         'parameters' => [['a' => 4, 'b' => 2], ['b' => 4]],
         'result'     => [2, 0.25],
     ],
-    'detault parameters' => [
+    'default parameters' => [
         'class' => new class() {
             use InjectsItself;
 

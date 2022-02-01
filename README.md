@@ -143,7 +143,7 @@ class LongRunningAction{
 Failed action jobs can be handled by defining a `jobFailed()` method:
 
 ```php
-use Illuminate\Support\Facades\Mail;class LongRunningAction{
+class LongRunningAction{
     use ActsAsJob;
        
     public function handle(){..}
@@ -154,6 +154,17 @@ use Illuminate\Support\Facades\Mail;class LongRunningAction{
     
     private function handleFailure(){..}
 }
+```
+
+### Batches and Chains of action jobs
+
+Similarly to the `runMany()` method, a new batch/chain of action jobs can be created starting from an array of parameters:
+
+```php
+
+MyAction::batch([$name1, $title1], [$name2, $title2])->dispatch();
+
+MyAction::chain([$name1, $title1], [$name2, $title2])->dispatch();
 ```
 
 
