@@ -101,7 +101,21 @@ $result = MyAwesomeAction::runMany(['Elizabeth', "Ms."], ['Fabio'],  ['title' =>
 Also, you can define a mock for the action (it will be authomatically bound to the app container):
 
 ```php
-$mock = DeleteReport::mock(fn($report_id) => null);
+FindTheAnswerToLifeTheUniverseAndEverything::mock(fn ($report_id) => 42);
+
+FindTheAnswerToLifeTheUniverseAndEverything::run() // 42
+```
+
+if you are interested in only mocking the return value, you can write:
+
+```php
+FindTheAnswerToLifeTheUniverseAndEverything::mock(42);
+```
+
+if your action has public methods other than `handle`, they can be mocked as well:
+
+```php
+MyWeirdAction::mock(handle: fn() => 5, handleForAdmin: fn() => 42);
 ```
 
 ## Dispatchable actions
