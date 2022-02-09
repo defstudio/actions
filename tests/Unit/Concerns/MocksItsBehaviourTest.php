@@ -21,6 +21,21 @@ it('can quickly mock its behaviour', function () {
     expect($instance->handle())->toBe('mocked successfully');
 });
 
+it('can quickly mock its return value', function () {
+    $class = new class() {
+        use MocksItsBehaviour;
+
+        public function handle($param): string
+        {
+            throw new ExpectationFailedException('Failed to assert that this class was mocked with param' . $param);
+        }
+    };
+
+    $instance = $class->mock('foo');
+
+    expect($instance->handle('test'))->toBe('foo');
+});
+
 it('and handle method is required for quick mock', function () {
     $class = new class() {
         use MocksItsBehaviour;

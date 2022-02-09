@@ -9,18 +9,27 @@ use Mockery\MockInterface;
 
 trait MocksItsBehaviour
 {
-    public static function mock(callable ...$methods): static|MockInterface
+    public static function mock(mixed ...$mocked): static|MockInterface
     {
         $mock = mock(static::class);
 
-        if (count($methods) == 1 && array_key_first($methods) == 0) {
+        /** @var callable[] $mocked */
+        $mocked = collect($mocked)->map(function (mixed $mockedItem) {
+            if (is_callable($mockedItem)) {
+                return $mockedItem;
+            }
+
+            return fn () => $mockedItem;
+        })->toArray();
+
+        if (count($mocked) == 1 && array_key_first($mocked) == 0) {
             if (!method_exists(static::class, 'handle')) {
                 throw ActionException::undefinedHandleMethod(static::class);
             }
 
-            $mock = $mock->expect(handle: $methods[0]);
+            $mock = $mock->expect(handle: $mocked[0]);
         } else {
-            $mock = mock(static::class)->expect(...$methods);
+            $mock = mock(static::class)->expect(...$mocked);
         }
 
         app()->bind(static::class, fn () => $mock);
