@@ -2,6 +2,14 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v0.1.0 - 2022-02-09
+
+## What's Changed
+
+- adds mock without arguments by @fabio-ivona in https://github.com/def-studio/actions/pull/7
+
+**Full Changelog**: https://github.com/def-studio/actions/compare/v0.0.9...v0.1.0
+
 ## v0.0.9 - 2022-02-09
 
 **Full Changelog**: https://github.com/def-studio/actions/compare/v0.0.8...v0.0.9
