@@ -31,9 +31,9 @@ it('can quickly mock its return value', function () {
         }
     };
 
-    $instance = $class->mock(33);
+    $instance = $class->mock('foo');
 
-    expect($instance->handle('test'))->toBe(33);
+    expect($instance->handle('test'))->toBe('foo');
 });
 
 it('and handle method is required for quick mock', function () {

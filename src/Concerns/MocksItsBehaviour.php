@@ -13,6 +13,7 @@ trait MocksItsBehaviour
     {
         $mock = mock(static::class);
 
+        /** @var callable[] $mocked */
         $mocked = collect($mocked)->map(function (mixed $mockedItem) {
             if (is_callable($mockedItem)) {
                 return $mockedItem;
