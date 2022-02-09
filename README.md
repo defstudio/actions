@@ -118,6 +118,12 @@ if your action has public methods other than `handle`, they can be mocked as wel
 MyWeirdAction::mock(handle: fn() => 5, handleForAdmin: fn() => 42);
 ```
 
+without arguments, `mocks` returns a MockInterface instance ready to be used
+
+```php
+MyAction::mock()->shouldNotReceive('handle');
+```
+
 ## Dispatchable actions
 
 An action can be made _dispatchable_ as a job with the `ActsAsJob` trait (or extending the `Action` class)
