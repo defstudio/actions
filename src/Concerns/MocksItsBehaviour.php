@@ -13,12 +13,12 @@ trait MocksItsBehaviour
     {
         $mock = mock(static::class);
 
-        $mocked = collect($mocked)->map(function(mixed $mockedItem){
-            if(is_callable($mockedItem)){
+        $mocked = collect($mocked)->map(function (mixed $mockedItem) {
+            if (is_callable($mockedItem)) {
                 return $mockedItem;
             }
 
-            return fn() => $mockedItem;
+            return fn () => $mockedItem;
         })->toArray();
 
         if (count($mocked) == 1 && array_key_first($mocked) == 0) {

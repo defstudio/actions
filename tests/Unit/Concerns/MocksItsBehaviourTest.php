@@ -36,8 +36,6 @@ it('can quickly mock its return value', function () {
     expect($instance->handle('test'))->toBe(33);
 });
 
-
-
 it('and handle method is required for quick mock', function () {
     $class = new class() {
         use MocksItsBehaviour;
