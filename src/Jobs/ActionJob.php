@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpDocMissingThrowsInspection */
+<?php
+
+/** @noinspection PhpDocMissingThrowsInspection */
 
 /** @noinspection PhpUnnecessaryLocalVariableInspection */
 
@@ -124,7 +126,7 @@ class ActionJob implements ShouldQueue
     public function __sleep()
     {
         $this->parameters = collect($this->parameters)
-            ->map(fn(mixed $parameter) => $this->getSerializedPropertyValue($parameter))
+            ->map(fn (mixed $parameter) => $this->getSerializedPropertyValue($parameter))
             ->toArray();
 
         return $this->__originalSleep();
@@ -135,14 +137,14 @@ class ActionJob implements ShouldQueue
         $this->__originalWakeup();
 
         $this->parameters = collect($this->parameters)
-            ->map(fn(mixed $parameter) => $this->getRestoredPropertyValue($parameter))
+            ->map(fn (mixed $parameter) => $this->getRestoredPropertyValue($parameter))
             ->toArray();
     }
 
     public function __serialize()
     {
         $this->parameters = collect($this->parameters)
-            ->map(fn(mixed $parameter) => $this->getSerializedPropertyValue($parameter))
+            ->map(fn (mixed $parameter) => $this->getSerializedPropertyValue($parameter))
             ->toArray();
 
         return $this->__originalSerialize();
@@ -153,7 +155,7 @@ class ActionJob implements ShouldQueue
         $this->__originalUnserialize($values);
 
         $this->parameters = collect($this->parameters)
-            ->map(fn(mixed $parameter) => $this->getRestoredPropertyValue($parameter))
+            ->map(fn (mixed $parameter) => $this->getRestoredPropertyValue($parameter))
             ->toArray();
     }
 }
