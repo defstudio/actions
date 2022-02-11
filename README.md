@@ -1,10 +1,10 @@
 # Helpers methods for Laravel Actions
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/defstudio/actions.svg?style=flat-square)](https://packagist.org/packages/defstudio/actions)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/defstudio/actions.svg)](https://packagist.org/packages/defstudio/actions)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/def-studio/actions/run-tests?label=tests)](https://github.com/def-studio/actions/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/def-studio/actions/Check%20&%20fix%20styling?label=code%20style)](https://github.com/def-studio/actions/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![GitHub Static Analysis Action Status](https://img.shields.io/github/workflow/status/def-studio/actions/PHPStan?label=phpstan)](https://github.com/def-studio/actions/actions?query=workflow%3Aphpstan+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/defstudio/actions.svg?style=flat-square)](https://packagist.org/packages/defstudio/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/defstudio/actions.svg)](https://packagist.org/packages/defstudio/actions)
 
 an opinionated lightweight package for creating Action classes
 
