@@ -2,6 +2,15 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v1.0.0 - 2022-02-11
+
+## What's Changed
+
+- implements spy testing helper by @fabio-ivona in https://github.com/def-studio/actions/pull/8
+- implements partial_mock testing helper by @fabio-ivona in https://github.com/def-studio/actions/pull/9
+
+**Full Changelog**: https://github.com/def-studio/actions/compare/v0.1.0...v1.0.0
+
 ## v0.1.0 - 2022-02-09
 
 ## What's Changed
