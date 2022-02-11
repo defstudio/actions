@@ -124,6 +124,17 @@ without arguments, `mocks` returns a MockInterface instance ready to be used
 MyAction::mock()->shouldNotReceive('handle');
 ```
 
+along with mocks, actions can also be _spied_:
+
+```php
+$spiedAction = MyAction::spy();
+
+$spiedAction->handle();
+$spiedAction->handle();
+
+$spiedAction->shouldHaveReceived()->handle()->twice()
+```
+
 ## Dispatchable actions
 
 An action can be made _dispatchable_ as a job with the `ActsAsJob` trait (or extending the `Action` class)
