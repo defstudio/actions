@@ -17,6 +17,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
+use Throwable;
 
 /**
  * @template TAction
@@ -52,10 +53,6 @@ class ActionJob implements ShouldQueue
         string $actionClass,
         mixed ...$parameters,
     ) {
-        if (!method_exists($actionClass, 'handle')) {
-            throw ActionException::undefinedHandleMethod($actionClass);
-        }
-
         $this->actionClass = $actionClass;
         $this->parameters  = array_values($parameters);
 
@@ -70,6 +67,10 @@ class ActionJob implements ShouldQueue
 
     public function handle(): void
     {
+        if (!method_exists($this->actionClass, 'handle')) {
+            throw ActionException::undefinedHandleMethod($this->actionClass);
+        }
+
         $this->callActionMethod('handle', ...$this->parameters);
     }
 
@@ -110,7 +111,7 @@ class ActionJob implements ShouldQueue
         return $this->action()->$method(...$args);
     }
 
-    public function failed(\Throwable $exception): void
+    public function failed(Throwable $exception): void
     {
         $this->callActionMethod('jobFailed', $exception);
     }
@@ -123,7 +124,7 @@ class ActionJob implements ShouldQueue
         return $displayName ?? $this->actionClass;
     }
 
-    public function __sleep()
+    public function __sleep(): array
     {
         $this->parameters = collect($this->parameters)
             ->map(fn (mixed $parameter) => $this->getSerializedPropertyValue($parameter))
@@ -132,7 +133,7 @@ class ActionJob implements ShouldQueue
         return $this->__originalSleep();
     }
 
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->__originalWakeup();
 
@@ -141,7 +142,7 @@ class ActionJob implements ShouldQueue
             ->toArray();
     }
 
-    public function __serialize()
+    public function __serialize(): array
     {
         $this->parameters = collect($this->parameters)
             ->map(fn (mixed $parameter) => $this->getSerializedPropertyValue($parameter))
@@ -150,7 +151,7 @@ class ActionJob implements ShouldQueue
         return $this->__originalSerialize();
     }
 
-    public function __unserialize(array $values)
+    public function __unserialize(array $values): void
     {
         $this->__originalUnserialize($values);
 
