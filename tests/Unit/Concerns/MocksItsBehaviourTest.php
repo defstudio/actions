@@ -74,3 +74,21 @@ it('can quickly mock all its methods', function () {
     expect($instance->handle())->toBe('"handle" mocked successfully');
     expect($instance->execute())->toBe('"execute" mocked successfully');
 });
+
+it('can spy its behaviour', function () {
+    $class = new class() {
+        use MocksItsBehaviour;
+
+        public function handle(): string
+        {
+            return 'was actually called';
+        }
+    };
+
+    $spy = $class::spy();
+
+    $spy->handle();
+
+    $spy->shouldHaveReceived()
+        ->handle();
+});

@@ -6,6 +6,7 @@ namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Exceptions\ActionException;
 use Illuminate\Support\Collection;
+use Mockery;
 use Mockery\MockInterface;
 
 trait MocksItsBehaviour
@@ -41,5 +42,14 @@ trait MocksItsBehaviour
         app()->bind(static::class, fn () => $mock);
 
         return $mock;
+    }
+
+    public static function spy(): static|MockInterface|Mockery\LegacyMockInterface
+    {
+        $spy = Mockery::spy(static::class);
+
+        app()->bind(static::class, fn () => $spy);
+
+        return $spy;
     }
 }
