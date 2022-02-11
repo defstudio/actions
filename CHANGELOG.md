@@ -74,4 +74,4 @@ All notable changes to `actions` will be documented in this file.
 
 ## Unreleased
 
-- stable release
+-
