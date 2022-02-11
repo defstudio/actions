@@ -11,7 +11,7 @@ use Mockery\MockInterface;
 
 trait MocksItsBehaviour
 {
-    public static function mock(mixed ...$mocked): static|MockInterface
+    public static function mock(mixed ...$mocked): static|MockInterface|Mockery\LegacyMockInterface
     {
         $mock = mock(static::class);
 
@@ -42,6 +42,12 @@ trait MocksItsBehaviour
         app()->bind(static::class, fn () => $mock);
 
         return $mock;
+    }
+
+    public static function partial_mock(mixed ...$mocked): static|MockInterface|Mockery\LegacyMockInterface
+    {
+        /* @phpstan-ignore-next-line  */
+        return self::mock(...$mocked)->makePartial();
     }
 
     public static function spy(): static|MockInterface|Mockery\LegacyMockInterface
