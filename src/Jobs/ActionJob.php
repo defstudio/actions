@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpDocMissingThrowsInspection */
 
 /** @noinspection PhpUnnecessaryLocalVariableInspection */
 
@@ -24,8 +24,14 @@ class ActionJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use Dispatchable;
-    use SerializesModels;
     use Batchable;
+
+    use SerializesModels {
+        __sleep as __originalSleep;
+        __wakeup as __originalWakeup;
+        __serialize as __originalSerialize;
+        __unserialize as __originalUnserialize;
+    }
 
     /** @var class-string<TAction> */
     protected string $actionClass;
@@ -44,6 +50,10 @@ class ActionJob implements ShouldQueue
         string $actionClass,
         mixed ...$parameters,
     ) {
+        if (!method_exists($actionClass, 'handle')) {
+            throw ActionException::undefinedHandleMethod($actionClass);
+        }
+
         $this->actionClass = $actionClass;
         $this->parameters  = array_values($parameters);
 
@@ -58,10 +68,6 @@ class ActionJob implements ShouldQueue
 
     public function handle(): void
     {
-        if (!method_exists($this->actionClass, 'handle')) {
-            throw ActionException::undefinedHandleMethod($this->actionClass);
-        }
-
         $this->callActionMethod('handle', ...$this->parameters);
     }
 
@@ -113,5 +119,41 @@ class ActionJob implements ShouldQueue
         $displayName = $this->callActionMethod('jobDisplayName', ...$this->parameters);
 
         return $displayName ?? $this->actionClass;
+    }
+
+    public function __sleep()
+    {
+        $this->parameters = collect($this->parameters)
+            ->map(fn(mixed $parameter) => $this->getSerializedPropertyValue($parameter))
+            ->toArray();
+
+        return $this->__originalSleep();
+    }
+
+    public function __wakeup()
+    {
+        $this->__originalWakeup();
+
+        $this->parameters = collect($this->parameters)
+            ->map(fn(mixed $parameter) => $this->getRestoredPropertyValue($parameter))
+            ->toArray();
+    }
+
+    public function __serialize()
+    {
+        $this->parameters = collect($this->parameters)
+            ->map(fn(mixed $parameter) => $this->getSerializedPropertyValue($parameter))
+            ->toArray();
+
+        return $this->__originalSerialize();
+    }
+
+    public function __unserialize(array $values)
+    {
+        $this->__originalUnserialize($values);
+
+        $this->parameters = collect($this->parameters)
+            ->map(fn(mixed $parameter) => $this->getRestoredPropertyValue($parameter))
+            ->toArray();
     }
 }
