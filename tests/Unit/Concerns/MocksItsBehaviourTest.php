@@ -92,3 +92,24 @@ it('can spy its behaviour', function () {
     $spy->shouldHaveReceived()
         ->handle();
 });
+
+it('can partially mock its behaviour', function () {
+    $class = new class() {
+        use MocksItsBehaviour;
+
+        public function handle(): string
+        {
+            throw new ExpectationFailedException('Failed to assert that this class was mocked');
+        }
+
+        public function dontMockMe(): string
+        {
+            return 'I have been executed';
+        }
+    };
+
+    $action = $class::partial_mock(fn () => 'mocked handle method');
+
+    expect($action->handle())->toBe('mocked handle method');
+    expect($action->dontMockMe())->toBe('I have been executed');
+});

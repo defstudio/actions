@@ -124,6 +124,15 @@ without arguments, `mocks` returns a MockInterface instance ready to be used
 MyAction::mock()->shouldNotReceive('handle');
 ```
 
+a partial mock (i.e. for actions with more than a single method)
+
+```php
+BuildOrder::partial_mock(fromRequest: fn() => true);
+
+//this will not be mocked
+BuildOrder::make()->fromJson($data);
+```
+
 along with mocks, actions can also be _spied_:
 
 ```php
