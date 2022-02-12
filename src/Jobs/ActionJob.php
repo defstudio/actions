@@ -28,13 +28,7 @@ class ActionJob implements ShouldQueue
     use Queueable;
     use Dispatchable;
     use Batchable;
-
-    use SerializesModels {
-        __sleep as __originalSleep;
-        __wakeup as __originalWakeup;
-        __serialize as __originalSerialize;
-        __unserialize as __originalUnserialize;
-    }
+    use SerializesModels;
 
     /** @var class-string<TAction> */
     protected string $actionClass;
@@ -122,41 +116,5 @@ class ActionJob implements ShouldQueue
         $displayName = $this->callActionMethod('jobDisplayName', ...$this->parameters);
 
         return $displayName ?? $this->actionClass;
-    }
-
-    public function __sleep(): array
-    {
-        $this->parameters = collect($this->parameters)
-            ->map(fn (mixed $parameter) => $this->getSerializedPropertyValue($parameter))
-            ->toArray();
-
-        return $this->__originalSleep();
-    }
-
-    public function __wakeup(): void
-    {
-        $this->__originalWakeup();
-
-        $this->parameters = collect($this->parameters)
-            ->map(fn (mixed $parameter) => $this->getRestoredPropertyValue($parameter))
-            ->toArray();
-    }
-
-    public function __serialize(): array
-    {
-        $this->parameters = collect($this->parameters)
-            ->map(fn (mixed $parameter) => $this->getSerializedPropertyValue($parameter))
-            ->toArray();
-
-        return $this->__originalSerialize();
-    }
-
-    public function __unserialize(array $values): void
-    {
-        $this->__originalUnserialize($values);
-
-        $this->parameters = collect($this->parameters)
-            ->map(fn (mixed $parameter) => $this->getRestoredPropertyValue($parameter))
-            ->toArray();
     }
 }
