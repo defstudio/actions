@@ -2,6 +2,12 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v1.0.1 - 2022-02-12
+
+**Full Changelog**: https://github.com/def-studio/actions/compare/v1.0.0...v1.0.1
+
+fix ActionJob serialization
+
 ## v1.0.0 - 2022-02-11
 
 ## What's Changed
@@ -72,4 +78,4 @@ All notable changes to `actions` will be documented in this file.
 
 ## Unreleased
 
--
+- 
