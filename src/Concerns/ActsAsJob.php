@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\PendingChain;
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Facades\Bus;
 use ReflectionMethod;
+use Throwable;
 
 trait ActsAsJob
 {
@@ -60,5 +61,9 @@ trait ActsAsJob
             })->toArray();
 
         return $jobs;
+    }
+
+    public function jobFailed(Throwable $exception): void
+    {
     }
 }
