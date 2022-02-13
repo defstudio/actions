@@ -2,6 +2,14 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v1.0.3 - 2022-02-13
+
+## What's Changed
+
+- adds jobFailed method by @fabio-ivona in https://github.com/def-studio/actions/pull/10
+
+**Full Changelog**: https://github.com/def-studio/actions/compare/v1.0.2...v1.0.3
+
 ## v1.0.2 - 2022-02-13
 
 **Full Changelog**: https://github.com/def-studio/actions/compare/v1.0.1...v1.0.2
