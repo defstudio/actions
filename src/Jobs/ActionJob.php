@@ -28,7 +28,12 @@ class ActionJob implements ShouldQueue
     use Queueable;
     use Dispatchable;
     use Batchable;
-    use SerializesModels;
+    use SerializesModels {
+        __sleep as serializesModels__sleep;
+        __wakeup as serializesModels__wakeup;
+        __serialize as serializesModels__serialize;
+        __unserialize as serializesModels__unserialize;
+    }
 
     /** @var class-string<TAction> */
     protected string $actionClass;
@@ -116,5 +121,41 @@ class ActionJob implements ShouldQueue
         $displayName = $this->callActionMethod('jobDisplayName', ...$this->parameters);
 
         return $displayName ?? $this->actionClass;
+    }
+
+    public function __sleep(): array
+    {
+        foreach ($this->parameters as $index => $parameter) {
+            $this->parameters[$index] = $this->getSerializedPropertyValue($parameter);
+        }
+
+        return $this->serializesModels__sleep();
+    }
+
+    public function __wakeup(): void
+    {
+        $this->serializesModels__wakeup();
+
+        foreach ($this->parameters as $index => $parameter) {
+            $this->parameters[$index] = $this->getRestoredPropertyValue($parameter);
+        }
+    }
+
+    public function __serialize(): array
+    {
+        foreach ($this->parameters as $index => $parameter) {
+            $this->parameters[$index] = $this->getSerializedPropertyValue($parameter);
+        }
+
+        return $this->serializesModels__serialize();
+    }
+
+    public function __unserialize(array $values): void
+    {
+        $this->serializesModels__unserialize($values);
+
+        foreach ($this->parameters as $index => $parameter) {
+            $this->parameters[$index] = $this->getRestoredPropertyValue($parameter);
+        }
     }
 }
