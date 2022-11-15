@@ -7,7 +7,6 @@
 namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Exceptions\ActionException;
-use ReflectionMethod;
 
 trait InjectsItself
 {
@@ -40,7 +39,7 @@ trait InjectsItself
                     return static::run($runArgs);
                 }
 
-                $reflection = new ReflectionMethod(static::class, 'handle');
+                $reflection = new \ReflectionMethod(static::class, 'handle');
 
                 if ($reflection->getNumberOfParameters() > 1) {
                     return static::run(...$runArgs);

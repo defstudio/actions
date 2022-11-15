@@ -46,13 +46,13 @@ trait MocksItsBehaviour
 
     public static function partial_mock(mixed ...$mocked): static|MockInterface|Mockery\LegacyMockInterface
     {
-        /* @phpstan-ignore-next-line  */
+        /* @phpstan-ignore-next-line */
         return self::mock(...$mocked)->makePartial();
     }
 
     public static function spy(): static|MockInterface|Mockery\LegacyMockInterface
     {
-        $spy = Mockery::spy(static::class);
+        $spy = \Mockery::spy(static::class);
 
         app()->bind(static::class, fn () => $spy);
 

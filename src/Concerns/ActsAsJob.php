@@ -9,8 +9,6 @@ use Illuminate\Bus\PendingBatch;
 use Illuminate\Foundation\Bus\PendingChain;
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Facades\Bus;
-use ReflectionMethod;
-use Throwable;
 
 trait ActsAsJob
 {
@@ -51,7 +49,7 @@ trait ActsAsJob
                     return static::job($jobArgs);
                 }
 
-                $reflection = new ReflectionMethod(static::class, 'handle');
+                $reflection = new \ReflectionMethod(static::class, 'handle');
 
                 if ($reflection->getNumberOfParameters() > 1) {
                     return static::job(...$jobArgs);
@@ -63,7 +61,7 @@ trait ActsAsJob
         return $jobs;
     }
 
-    public function jobFailed(Throwable $exception): void
+    public function jobFailed(\Throwable $exception): void
     {
     }
 }

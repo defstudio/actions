@@ -17,7 +17,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
-use Throwable;
 
 /**
  * @template TAction
@@ -53,11 +52,11 @@ class ActionJob implements ShouldQueue
         $this->actionClass = $actionClass;
         $this->parameters  = array_values($parameters);
 
-        $this->onQueue($this->getActionProperty('queue')); //@phpstan-ignore-line
+        $this->onQueue($this->getActionProperty('queue')); // @phpstan-ignore-line
 
-        $this->tries   = $this->getActionProperty('tries'); //@phpstan-ignore-line
-        $this->timeout = $this->getActionProperty('timeout'); //@phpstan-ignore-line
-        $this->backoff = $this->getActionProperty('backoff'); //@phpstan-ignore-line
+        $this->tries   = $this->getActionProperty('tries'); // @phpstan-ignore-line
+        $this->timeout = $this->getActionProperty('timeout'); // @phpstan-ignore-line
+        $this->backoff = $this->getActionProperty('backoff'); // @phpstan-ignore-line
 
         $this->callActionMethod('configureJob', $this);
     }
@@ -108,7 +107,7 @@ class ActionJob implements ShouldQueue
         return $this->action()->$method(...$args);
     }
 
-    public function failed(Throwable $exception): void
+    public function failed(\Throwable $exception): void
     {
         $this->callActionMethod('jobFailed', $exception);
     }
