@@ -15,7 +15,7 @@ trait MocksItsBehaviour
     {
         $mock = mock(static::class);
 
-        /** @var Collection<callable(): mixed> $mocked */
+        /** @var Collection<array-key, callable(): mixed> $mocked */
         $mocked = collect($mocked)->map(function (mixed $mockedItem) {
             if (is_callable($mockedItem)) {
                 return $mockedItem;
@@ -32,6 +32,7 @@ trait MocksItsBehaviour
                     throw ActionException::undefinedHandleMethod(static::class);
                 }
 
+                /** @phpstan-ignore-next-line  */
                 $mock = $mock->expect(handle: $mocked->first());
             } else {
                 /** @phpstan-ignore-next-line  */
