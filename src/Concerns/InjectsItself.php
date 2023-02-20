@@ -7,8 +7,6 @@
 namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Exceptions\ActionException;
-use \ReflectionClass;
-use \ReflectionParameter;
 
 trait InjectsItself
 {
@@ -19,11 +17,11 @@ trait InjectsItself
         }
 
         if (!is_array($parameters[0])) {
-            $reflection = new ReflectionClass(static::class);
+            $reflection = new \ReflectionClass(static::class);
 
             if ($reflection->getConstructor()->getNumberOfRequiredParameters() <= count($parameters)) {
                 $parametersNames = collect($reflection->getConstructor()->getParameters())
-                    ->map(fn (ReflectionParameter $parameter) => $parameter->getName())
+                    ->map(fn (\ReflectionParameter $parameter) => $parameter->getName())
                     ->values();
 
                 $newParameters = [];
@@ -34,7 +32,6 @@ trait InjectsItself
                 $parameters = $newParameters;
             }
         }
-
 
         return app(static::class, $parameters);
     }
