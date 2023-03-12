@@ -38,7 +38,7 @@ trait InjectsItself
         return app(static::class, $parameters);
     }
 
-    public static function run(mixed ...$args): mixed
+    public function run(mixed ...$args): mixed
     {
         /** @phpstan-ignore-next-line  */
         $instance = isset($this) ? $this : static::make();
