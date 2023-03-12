@@ -46,6 +46,14 @@ it('can run injecting itself from service container', function () {
     expect(InjectsItselfTestClass::run())->toBe('test double');
 });
 
+it('can run itself from an instance', function () {
+    expect(InjectsItselfTestClass::make()->run())->toBe('test class');
+
+    app()->bind(InjectsItselfTestClass::class, fn () => new InjectsItselfTestDouble());
+
+    expect(InjectsItselfTestClass::make()->run())->toBe('test double');
+});
+
 it('requires and handle method to run injecting from service container', function () {
     $class = new class() {
         use InjectsItself;

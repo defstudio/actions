@@ -19,7 +19,9 @@ trait InjectsItself
         if (!is_array($parameters[0])) {
             $reflection = new \ReflectionClass(static::class);
 
+            /* @phpstan-ignore-next-line */
             if ($reflection->getConstructor()->getNumberOfRequiredParameters() <= count($parameters)) {
+                /** @phpstan-ignore-next-line  */
                 $parametersNames = collect($reflection->getConstructor()->getParameters())
                     ->map(fn (\ReflectionParameter $parameter) => $parameter->getName())
                     ->values();
@@ -36,9 +38,10 @@ trait InjectsItself
         return app(static::class, $parameters);
     }
 
-    public static function run(mixed ...$args): mixed
+    public function run(mixed ...$args): mixed
     {
-        $instance = static::make();
+        /** @phpstan-ignore-next-line  */
+        $instance = isset($this) ? $this : static::make();
 
         if (!method_exists(static::class, 'handle')) {
             throw ActionException::undefinedHandleMethod(static::class);
