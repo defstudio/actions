@@ -8,12 +8,13 @@ use DefStudio\Actions\Exceptions\ActionException;
 use Illuminate\Support\Collection;
 use Mockery;
 use Mockery\MockInterface;
+use Pest\Mock\Mock;
 
 trait MocksItsBehaviour
 {
     public static function mock(mixed ...$mocked): static|MockInterface|Mockery\LegacyMockInterface
     {
-        $mock = mock(static::class);
+        $mock = new Mock(static::class);
 
         /** @var Collection<array-key, callable(): mixed> $mocked */
         $mocked = collect($mocked)->map(function (mixed $mockedItem) {
@@ -36,7 +37,7 @@ trait MocksItsBehaviour
                 $mock = $mock->expect(handle: $mocked->first());
             } else {
                 /** @phpstan-ignore-next-line  */
-                $mock = mock(static::class)->expect(...$mocked->toArray());
+                $mock = (new Mock(static::class))->expect(...$mocked->toArray());
             }
         }
 
