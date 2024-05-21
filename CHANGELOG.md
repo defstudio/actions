@@ -2,6 +2,18 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v1.1.4 - 2024-05-21
+
+### What's Changed
+
+* Implemented DispatchSync method by @MarioGattolla in https://github.com/defstudio/actions/pull/11
+
+### New Contributors
+
+* @MarioGattolla made their first contribution in https://github.com/defstudio/actions/pull/11
+
+**Full Changelog**: https://github.com/defstudio/actions/compare/v1.1.3...v1.1.4
+
 ## v1.1.3 - 2023-06-09
 
 **Full Changelog**: https://github.com/defstudio/actions/compare/v1.1.2...v1.1.3
