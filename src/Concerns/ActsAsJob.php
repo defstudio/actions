@@ -6,6 +6,7 @@ namespace DefStudio\Actions\Concerns;
 
 use DefStudio\Actions\Jobs\ActionJob;
 use Illuminate\Bus\PendingBatch;
+use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Foundation\Bus\PendingChain;
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Facades\Bus;
@@ -20,6 +21,11 @@ trait ActsAsJob
     public static function dispatch(mixed ...$args): PendingDispatch
     {
         return new PendingDispatch(static::job(...$args));
+    }
+
+    public static function dispatchSync(mixed ...$args): mixed
+    {
+        return app(Dispatcher::class)->dispatchSync(static::job(...$args));
     }
 
     public static function dispatchAfterResponse(mixed ...$args): PendingDispatch
