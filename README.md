@@ -159,6 +159,8 @@ or can be dispatched with its dedicated methods:
 ```php
 LongRunningAction::dispatch($argument_1, $argument_2);
 
+LongRunningAction::dispatchSync($argument_1, $argument_2);
+
 LongRunningAction::dispatchAfterResponse($argument_1, $argument_2);
 ```
 
