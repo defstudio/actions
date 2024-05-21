@@ -49,6 +49,20 @@ it('can dispatch after response', function () {
     });
 });
 
+it('can dispatch sync', function () {
+    $class = new class() {
+        use ActsAsJob;
+    };
+
+    Bus::fake();
+
+    $class::dispatchSync('test');
+
+    Bus::assertDispatchedSync(ActionJob::class, function (ActionJob $job) use ($class) {
+        return $job->action() instanceof $class;
+    });
+});
+
 it('can create a batch', function () {
     $class = new class() {
         use ActsAsJob;
