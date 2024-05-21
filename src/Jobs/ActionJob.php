@@ -38,9 +38,9 @@ class ActionJob implements ShouldQueue
     /** @var array<int, mixed> */
     protected array $parameters;
 
-    public int|null $tries;
-    public int|null $timeout;
-    public array|null $backoff;
+    public ?int $tries;
+    public ?int $timeout;
+    public ?array $backoff;
 
     /**
      * @param class-string<TAction> $actionClass
