@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
 
 it('creates a job decorator', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
     };
 
@@ -20,7 +20,7 @@ it('creates a job decorator', function () {
 });
 
 it('can dispatch as a job', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
     };
 
@@ -35,7 +35,7 @@ it('can dispatch as a job', function () {
 });
 
 it('can dispatch after response', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
     };
 
@@ -50,7 +50,7 @@ it('can dispatch after response', function () {
 });
 
 it('can dispatch sync', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
     };
 
@@ -64,7 +64,7 @@ it('can dispatch sync', function () {
 });
 
 it('can create a batch', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function handle($name): string
@@ -93,7 +93,7 @@ it('can create a batch', function () {
 });
 
 it('can create a chain', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function handle($name): string

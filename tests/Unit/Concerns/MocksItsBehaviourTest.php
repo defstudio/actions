@@ -5,7 +5,7 @@ use DefStudio\Actions\Exceptions\ActionException;
 use PHPUnit\Framework\ExpectationFailedException;
 
 it('can quickly mock its behaviour', function () {
-    $class = new class() {
+    $class = new class {
         use MocksItsBehaviour;
 
         public function handle(): string
@@ -22,7 +22,7 @@ it('can quickly mock its behaviour', function () {
 });
 
 it('can quickly mock its return value', function () {
-    $class = new class() {
+    $class = new class {
         use MocksItsBehaviour;
 
         public function handle($param): string
@@ -37,7 +37,7 @@ it('can quickly mock its return value', function () {
 });
 
 it('and handle method is required for quick mock', function () {
-    $class = new class() {
+    $class = new class {
         use MocksItsBehaviour;
 
         public function execute(): string
@@ -52,7 +52,7 @@ it('and handle method is required for quick mock', function () {
 })->throws(ActionException::class);
 
 it('can quickly mock all its methods', function () {
-    $class = new class() {
+    $class = new class {
         use MocksItsBehaviour;
 
         public function handle(): string
@@ -76,7 +76,7 @@ it('can quickly mock all its methods', function () {
 });
 
 it('can spy its behaviour', function () {
-    $class = new class() {
+    $class = new class {
         use MocksItsBehaviour;
 
         public function handle(): string
@@ -94,7 +94,7 @@ it('can spy its behaviour', function () {
 });
 
 it('can partially mock its behaviour', function () {
-    $class = new class() {
+    $class = new class {
         use MocksItsBehaviour;
 
         public function handle(): string

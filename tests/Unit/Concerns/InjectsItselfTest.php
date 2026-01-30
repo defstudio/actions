@@ -47,7 +47,7 @@ it('can run injecting itself from service container', function () {
 });
 
 it('requires and handle method to run injecting from service container', function () {
-    $class = new class() {
+    $class = new class {
         use InjectsItself;
 
         public function execute(): string
@@ -63,7 +63,7 @@ it('can run itself multiple times', function ($class, $parameters, $result) {
     expect($class::runMany(...$parameters))->toMatchArray($result);
 })->with([
     'single parameter' => [
-        'class' => new class() {
+        'class' => new class {
             use InjectsItself;
 
             public function handle(string $name): string
@@ -79,7 +79,7 @@ it('can run itself multiple times', function ($class, $parameters, $result) {
         ],
     ],
     'multiple parameters' => [
-        'class' => new class() {
+        'class' => new class {
             use InjectsItself;
 
             public function handle(array $names): string
@@ -95,7 +95,7 @@ it('can run itself multiple times', function ($class, $parameters, $result) {
         ],
     ],
     'named parameters' => [
-        'class' => new class() {
+        'class' => new class {
             use InjectsItself;
 
             public function handle(int $a = 1, int $b = 2): float
@@ -107,7 +107,7 @@ it('can run itself multiple times', function ($class, $parameters, $result) {
         'result'     => [2, 0.25],
     ],
     'default parameters' => [
-        'class' => new class() {
+        'class' => new class {
             use InjectsItself;
 
             public function handle(int $a = 1, int $b = 2): float
