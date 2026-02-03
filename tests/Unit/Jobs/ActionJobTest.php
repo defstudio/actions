@@ -227,6 +227,8 @@ test('action handle method is called', function () {
 
     $class::mock(fn () => null);
 
+    expect(fn () => $class::dispatch())->not()->toThrow(ExpectationFailedException::class);
+
     $class::dispatch();
 });
 

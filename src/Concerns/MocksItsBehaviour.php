@@ -8,40 +8,37 @@ use DefStudio\Actions\Exceptions\ActionException;
 use Illuminate\Support\Collection;
 use Mockery;
 use Mockery\MockInterface;
-use Pest\Mock\Mock;
 
 trait MocksItsBehaviour
 {
     public static function mock(mixed ...$mocked): static|MockInterface|Mockery\LegacyMockInterface
     {
-        $mock = new Mock(static::class);
-
         /** @var Collection<array-key, callable(): mixed> $mocked */
-        $mocked = collect($mocked)->map(function (mixed $mockedItem) {
+        $mocked = collect($mocked)->map(function(mixed $mockedItem) {
             if (is_callable($mockedItem)) {
                 return $mockedItem;
             }
 
-            return fn () => $mockedItem;
+            return fn() => $mockedItem;
         });
 
-        if ($mocked->isEmpty()) {
-            $mock = $mock->expect();
-        } else {
+        $mock = Mockery::mock(static::class);
+
+        if ($mocked->isNotEmpty()) {
             if ($mocked->count() == 1 && $mocked->keys()->first() == 0) {
                 if (!method_exists(static::class, 'handle')) {
                     throw ActionException::undefinedHandleMethod(static::class);
                 }
 
-                /** @phpstan-ignore-next-line  */
-                $mock = $mock->expect(handle: $mocked->first());
+                $mock->shouldReceive('handle')->andReturnUsing($mocked->first());
             } else {
-                /** @phpstan-ignore-next-line  */
-                $mock = (new Mock(static::class))->expect(...$mocked->toArray());
+                foreach ($mocked as $method => $callback) {
+                    $mock->shouldReceive($method)->andReturnUsing($callback);
+                }
             }
         }
 
-        app()->bind(static::class, fn () => $mock);
+        app()->bind(static::class, fn() => $mock);
 
         return $mock;
     }
@@ -56,7 +53,7 @@ trait MocksItsBehaviour
     {
         $spy = \Mockery::spy(static::class);
 
-        app()->bind(static::class, fn () => $spy);
+        app()->bind(static::class, fn() => $spy);
 
         return $spy;
     }
