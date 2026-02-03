@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Queue;
 use PHPUnit\Framework\ExpectationFailedException;
 
 test('queue can be chosen', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public string $queue = 'test_queue';
@@ -24,7 +24,7 @@ test('queue can be chosen', function () {
 });
 
 test('queue can be chosen with a closure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function queue(): string
@@ -43,7 +43,7 @@ test('queue can be chosen with a closure', function () {
 });
 
 test('queue can be chosen with a getClosure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function getQueue(): string
@@ -62,7 +62,7 @@ test('queue can be chosen with a getClosure', function () {
 });
 
 test('tries can be chosen', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public int $tries = 42;
@@ -74,7 +74,7 @@ test('tries can be chosen', function () {
 });
 
 test('tries can be chosen with a closure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function tries(): int
@@ -89,7 +89,7 @@ test('tries can be chosen with a closure', function () {
 });
 
 test('tries can be chosen with a getClosure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function getTries(): int
@@ -104,7 +104,7 @@ test('tries can be chosen with a getClosure', function () {
 });
 
 test('timeout can be chosen', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public int $timeout = 150;
@@ -116,7 +116,7 @@ test('timeout can be chosen', function () {
 });
 
 test('timeout can be chosen with a closure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function timeout(): int
@@ -131,7 +131,7 @@ test('timeout can be chosen with a closure', function () {
 });
 
 test('timeout can be chosen with a getClosure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function getTimeout(): int
@@ -146,7 +146,7 @@ test('timeout can be chosen with a getClosure', function () {
 });
 
 test('backoff can be chosen', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public array $backoff = [10, 100, 1000];
@@ -158,7 +158,7 @@ test('backoff can be chosen', function () {
 });
 
 test('backoff can be chosen with a closure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function backoff(): array
@@ -173,7 +173,7 @@ test('backoff can be chosen with a closure', function () {
 });
 
 test('backoff can be chosen with a getClosure', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function getBackoff(): array
@@ -188,7 +188,7 @@ test('backoff can be chosen with a getClosure', function () {
 });
 
 test('job can be configured from action', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public function configureJob(ActionJob $job)
@@ -215,7 +215,7 @@ test('job can be configured from action', function () {
 });
 
 test('action handle method is called', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
         use MocksItsBehaviour;
 
@@ -227,11 +227,13 @@ test('action handle method is called', function () {
 
     $class::mock(fn () => null);
 
+    expect(fn () => $class::dispatch())->not()->toThrow(ExpectationFailedException::class);
+
     $class::dispatch();
 });
 
 test('action handle method is required', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
     };
 
@@ -239,7 +241,7 @@ test('action handle method is required', function () {
 })->throws(ActionException::class);
 
 test('actions can handle failures', function () {
-    $class = new class() {
+    $class = new class {
         use ActsAsJob;
 
         public static bool $handled = false;

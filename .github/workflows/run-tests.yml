@@ -13,17 +13,23 @@ jobs:
       fail-fast: true
       matrix:
         os: [ ubuntu-latest, macos-latest ]
-        php: [ 8.0, 8.1 ]
-        laravel: [ 8.*, 9.* ]
+        php: [ 8.2, 8.3, 8.4, 8.5]
+        laravel: [ 11.*, 12.* ]
         stability: [prefer-stable, prefer-lowest]
         include:
-          - laravel: 8.*
-            testbench: ^6.6
-          - laravel: 9.*
-            testbench: ^7.0
+          - laravel: 11.*
+            testbench: ^9.0
+          - laravel: 12.*
+            testbench: ^10.0
         exclude:
-          - laravel: 8.*
-            stability: prefer-lowest
+        - laravel: 11.*
+          stability: prefer-lowest
+        - laravel: 12.*
+          stability: prefer-lowest
+        - laravel: 11.*
+          php: 8.5
+        - php: 8.2
+          stability: prefer-lowest
 
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
@@ -51,4 +57,4 @@ jobs:
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
-        run: vendor/bin/pest
+        run: vendor/bin/pest --no-coverage -vv --ci
