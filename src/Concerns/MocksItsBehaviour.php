@@ -14,15 +14,15 @@ trait MocksItsBehaviour
     public static function mock(mixed ...$mocked): static|MockInterface|Mockery\LegacyMockInterface
     {
         /** @var Collection<array-key, callable(): mixed> $mocked */
-        $mocked = collect($mocked)->map(function(mixed $mockedItem) {
+        $mocked = collect($mocked)->map(function (mixed $mockedItem) {
             if (is_callable($mockedItem)) {
                 return $mockedItem;
             }
 
-            return fn() => $mockedItem;
+            return fn () => $mockedItem;
         });
 
-        $mock = Mockery::mock(static::class);
+        $mock = \Mockery::mock(static::class);
 
         if ($mocked->isNotEmpty()) {
             if ($mocked->count() == 1 && $mocked->keys()->first() == 0) {
@@ -38,7 +38,7 @@ trait MocksItsBehaviour
             }
         }
 
-        app()->bind(static::class, fn() => $mock);
+        app()->bind(static::class, fn () => $mock);
 
         return $mock;
     }
@@ -53,7 +53,7 @@ trait MocksItsBehaviour
     {
         $spy = \Mockery::spy(static::class);
 
-        app()->bind(static::class, fn() => $spy);
+        app()->bind(static::class, fn () => $spy);
 
         return $spy;
     }
