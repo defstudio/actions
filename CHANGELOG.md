@@ -2,6 +2,14 @@
 
 All notable changes to `actions` will be documented in this file.
 
+## v2.0.0 - 2026-02-03
+
+### What's Changed
+
+* php 8.5 + laravel 12 by @MarioGattolla in https://github.com/defstudio/actions/pull/12
+
+**Full Changelog**: https://github.com/defstudio/actions/compare/v1.1.4...v2.0.0
+
 ## v1.1.4 - 2024-05-21
 
 ### What's Changed
